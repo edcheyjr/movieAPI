@@ -1,5 +1,18 @@
 HELP.md
+
+### Target ###
 target/
+### Maven ###
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+#.mvn/wrapper/maven-wrapper.jar
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -32,13 +45,13 @@ build/
 ### VS Code ###
 .vscode/
 
-### Idea ###
-.idea/
 
 ### ENV ###
 .env
 .env.local
 .env.test
 .env.production
+
+
 
 

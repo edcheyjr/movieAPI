@@ -61,4 +61,33 @@ public class MovieService {
     public Optional<Movie> singleMovie(String imdbId) {
         return  movieRepository.findMovieByImdbId(imdbId);
     }
+
+    public Movie updateMovie(String imdbId, String title, String releaseDate, String trailerLink, String poster, List<String> genres, List<String> backdrops) {
+
+        Query query = new Query().addCriteria(Criteria.where(Movie.IMDB_ID).is(imdbId));
+        Optional<Movie> movie = movieRepository.findMovieByImdbId(imdbId);
+        FindAndModifyOptions findAndModifyOptions = new FindAndModifyOptions().returnNew(true).upsert(true);
+        Update update = new Update();
+
+        if (!title.isBlank()) {
+            update.set(Movie.TITLE, title);
+        }
+        if (!releaseDate.isBlank()) {
+            update.set(Movie.RELEASE_DATE, releaseDate);
+        }
+        if (!trailerLink.isBlank()) {
+            update.set(Movie.TRAILER_LINK, trailerLink);
+        }
+        if (!poster.isBlank()) {
+            update.set(Movie.POSTER, poster);
+        }
+        if (movie.isPresent() && !genres.isEmpty()) {
+            update.set(Movie.GENRES, genres);
+        }
+        if (movie.isPresent() && !backdrops.isEmpty()) {
+            update.set(Movie.BACKDROPS, backdrops);
+        }
+        return mongoTemplate.findAndModify(query, update, findAndModifyOptions, Movie.class);
+    }
+
 }

@@ -84,7 +84,6 @@ public class MovieService {
     public Movie updateMovie(String imdbId, String title, String releaseDate, String trailerLink, String poster, List<String> genres, List<String> backdrops) {
 
         Query query = new Query().addCriteria(Criteria.where(Movie.IMDB_ID).is(imdbId));
-        Optional<Movie> movie = movieRepository.findMovieByImdbId(imdbId);
         FindAndModifyOptions findAndModifyOptions = new FindAndModifyOptions().returnNew(true).upsert(true);
         Update update = new Update();
 

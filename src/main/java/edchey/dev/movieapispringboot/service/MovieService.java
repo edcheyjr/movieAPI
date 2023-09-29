@@ -25,6 +25,30 @@ public class MovieService {
         this.mongoTemplate = mongoTemplate;
     }
 
+    /**
+     * Creates and inserts a new Movie
+     *
+     * @param imdbId      unique imdb id
+     * @param title       title of the movie
+     * @param releaseDate Date release
+     * @param poster      poster link
+     * @param trailerLink trailer link
+     * @param backdrops   backdrop list
+     * @param genres      genres list
+     * @return Movie
+     */
+    public Movie createMovie(String imdbId, String title, String releaseDate, String trailerLink, String poster, List<String> genres, List<String> backdrops) {
+        ObjectId id = new ObjectId();
+        List<String> emptyList = new ArrayList<>();
+        List<Review> reviews = new ArrayList<>();
+        System.out.println("New Object Id:" + id);
+        Movie movie = new Movie(id, imdbId, title, releaseDate, trailerLink, poster, genres, backdrops, reviews);
+        return movieRepository.insert(movie);
+    }
+
+    /**
+     * List all the movie
+     */
     public List<Movie> allMovies(){
         return movieRepository.findAll();
     }

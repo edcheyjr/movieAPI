@@ -37,13 +37,20 @@ public class MovieService {
      * @param genres      genres list
      * @return Movie
      */
-    public Movie createMovie(String imdbId, String title, String releaseDate, String trailerLink, String poster, List<String> genres, List<String> backdrops) {
-        ObjectId id = new ObjectId();
-        List<String> emptyList = new ArrayList<>();
-        List<Review> reviews = new ArrayList<>();
-        System.out.println("New Object Id:" + id);
-        Movie movie = new Movie(id, imdbId, title, releaseDate, trailerLink, poster, genres, backdrops, reviews);
-        return movieRepository.insert(movie);
+    public Map<String, Optional<Movie>> createMovie(String imdbId, String title, String releaseDate, String trailerLink, String poster, List<String> genres, List<String> backdrops) {
+        Map<String, Optional<Movie>> response = new HashMap<>();
+        Optional<Movie> movie = movieRepository.findMovieByImdbId(imdbId);
+        if (movie.isEmpty()) {
+            ObjectId id = new ObjectId();
+            List<Review> reviews = new ArrayList<>();
+            System.out.println("New Object Id:" + id);
+            Movie newMovie = new Movie(id, imdbId, title, releaseDate, trailerLink, poster, genres, backdrops, reviews);
+            movieRepository.insert(newMovie);
+            response.put(Movie.TABLE_NAME, Optional.of(newMovie));
+            return response;
+        }
+        return response;
+
     }
 
     /**

@@ -90,4 +90,21 @@ public class MovieService {
         return mongoTemplate.findAndModify(query, update, findAndModifyOptions, Movie.class);
     }
 
+    /**
+     * Deletes a single movie
+     *
+     * @param imdbId This the unique imdb id for the movie
+     * @return {null or String} if delete returns the id of the movie deleted else return null
+     */
+    public Map<String, String> deleteMovie(String imdbId) {
+        Map<String, String> idMap = new HashMap<>();
+//        find the movie
+        Query query = new Query().addCriteria(Criteria.where(Movie.IMDB_ID).is(imdbId));
+        idMap.put(Movie.IMDB_ID, imdbId); //add and return od the movie deleted
+        mongoTemplate.findAndRemove(query, Movie.class, Movie.TABLE_NAME);
+//        delete the movie
+        return idMap;
+    }
+
+
 }

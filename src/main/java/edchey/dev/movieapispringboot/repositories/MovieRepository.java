@@ -10,4 +10,7 @@ import java.util.Optional;
 @Repository
 public interface MovieRepository extends MongoRepository<Movie, ObjectId> {
     Optional<Movie> findMovieByImdbId(String imdbId);
+
+    String deleteMovieByImdbId(String imdbId);
+
 }

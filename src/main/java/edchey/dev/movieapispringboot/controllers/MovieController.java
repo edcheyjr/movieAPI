@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
+
+//TODO Handle Execeptions
 @RestController
 @RequestMapping("/api/v1/movies")
 public class MovieController {
@@ -38,12 +40,12 @@ public class MovieController {
 
     @GetMapping
     public ResponseEntity<List<Movie>> getAllMovies(){
-        return new ResponseEntity<List<Movie>>(movieService.allMovies(), HttpStatus.OK) ;
+        return new ResponseEntity<>(movieService.allMovies(), HttpStatus.OK);
     }
 
     @GetMapping("/{imdbId}")
     public ResponseEntity<Optional<Movie>>getSingleMovie(@PathVariable String imdbId){
-        return new ResponseEntity<Optional<Movie>>(movieService.singleMovie(imdbId), HttpStatus.OK);
+        return new ResponseEntity<>(movieService.singleMovie(imdbId), HttpStatus.OK);
     }
 
     @PutMapping("/{imdbId}")
@@ -70,7 +72,7 @@ public class MovieController {
         final String poster = payload.has(Movie.POSTER) ? payload.get(Movie.POSTER).asText() : "";
 
         Movie movie = movieService.updateMovie(imdbId, title, releaseDate, trailer, poster, genres, backdrops);
-        return new ResponseEntity<Movie>(movie, HttpStatus.OK);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
     @DeleteMapping("/{imdbId}")

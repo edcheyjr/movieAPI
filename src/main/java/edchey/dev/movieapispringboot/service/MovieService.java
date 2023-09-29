@@ -100,10 +100,10 @@ public class MovieService {
         if (!poster.isBlank()) {
             update.set(Movie.POSTER, poster);
         }
-        if (movie.isPresent() && !genres.isEmpty()) {
+        if (!genres.isEmpty()) {
             update.set(Movie.GENRES, genres);
         }
-        if (movie.isPresent() && !backdrops.isEmpty()) {
+        if (!backdrops.isEmpty()) {
             update.set(Movie.BACKDROPS, backdrops);
         }
         return mongoTemplate.findAndModify(query, update, findAndModifyOptions, Movie.class);
@@ -117,10 +117,8 @@ public class MovieService {
      */
     public Map<String, String> deleteMovie(String imdbId) {
         Map<String, String> idMap = new HashMap<>();
-//        find the movie
-        Query query = new Query().addCriteria(Criteria.where(Movie.IMDB_ID).is(imdbId));
-        idMap.put(Movie.IMDB_ID, imdbId); //add and return od the movie deleted
-        mongoTemplate.findAndRemove(query, Movie.class, Movie.TABLE_NAME);
+        Optional<Movie> movie = movieRepository.findMovieByImdbId(imdbId);
+        System.out.println(movie);
 //        delete the movie
         return idMap;
     }

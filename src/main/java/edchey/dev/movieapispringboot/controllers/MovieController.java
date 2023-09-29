@@ -71,4 +71,9 @@ public class MovieController {
         Movie movie = movieService.updateMovie(imdbId, title, releaseDate, trailer, poster, genres, backdrops);
         return new ResponseEntity<Movie>(movie, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{imdbId}")
+    public ResponseEntity<Map<String, String>> deleteAMovies(@PathVariable String imdbId) {
+        return new ResponseEntity<>(movieService.deleteMovie(imdbId), HttpStatus.OK);
+    }
 }

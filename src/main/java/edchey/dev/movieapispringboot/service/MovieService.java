@@ -53,6 +53,11 @@ public class MovieService {
         return movieRepository.findAll();
     }
 
+    /**
+     * Gets a single movie
+     *
+     * @param imdbId unique id
+     */
     public Optional<Movie> singleMovie(String imdbId) {
         return  movieRepository.findMovieByImdbId(imdbId);
     }

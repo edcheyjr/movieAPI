@@ -62,6 +62,18 @@ public class MovieService {
         return  movieRepository.findMovieByImdbId(imdbId);
     }
 
+    /**
+     * Updates Movie based on the params
+     *
+     * @param imdbId      unique imdb id
+     * @param title       title of the movie
+     * @param releaseDate Date release
+     * @param poster      poster link
+     * @param trailerLink trailer link
+     * @param backdrops   backdrop list
+     * @param genres      genres list
+     * @return Movie Updated movie
+     */
     public Movie updateMovie(String imdbId, String title, String releaseDate, String trailerLink, String poster, List<String> genres, List<String> backdrops) {
 
         Query query = new Query().addCriteria(Criteria.where(Movie.IMDB_ID).is(imdbId));

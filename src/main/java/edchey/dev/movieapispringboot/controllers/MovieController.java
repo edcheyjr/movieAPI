@@ -2,6 +2,7 @@ package edchey.dev.movieapispringboot.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.mongodb.MongoException;
 import edchey.dev.movieapispringboot.models.Movie;
 import edchey.dev.movieapispringboot.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,11 @@ public class MovieController {
 
     @DeleteMapping("/{imdbId}")
     public ResponseEntity<Map<String, String>> deleteAMovies(@PathVariable String imdbId) {
-        return new ResponseEntity<>(movieService.deleteMovie(imdbId), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(movieService.deleteMovie(imdbId), HttpStatus.OK);
+        } catch (MongoException me) {
+            System.out.println("Unable to delete due to an error: " + me);
+        }
+        return null;
     }
 }

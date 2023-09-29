@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
@@ -42,5 +43,32 @@ public class MovieController {
     @GetMapping("/{imdbId}")
     public ResponseEntity<Optional<Movie>>getSingleMovie(@PathVariable String imdbId){
         return new ResponseEntity<Optional<Movie>>(movieService.singleMovie(imdbId), HttpStatus.OK);
+    }
+
+    @PutMapping("/{imdbId}")
+    public ResponseEntity<Movie> putAMovie(@PathVariable String imdbId, @RequestBody ObjectNode payload) {
+        System.out.println("payload " + payload);
+        final List<String> backdrops = new ArrayList<>();
+        final List<String> genres = new ArrayList<>();
+
+        if (payload.has(Movie.BACKDROPS)) {
+            final Iterable<JsonNode> b = payload.withArray(Movie.BACKDROPS);
+            backdrops.addAll(StreamSupport.stream(b.spliterator(), false)
+                    .map(JsonNode::asText)
+                    .toList());
+        }
+        if (payload.has(Movie.GENRES)) {
+            final Iterable<JsonNode> n = payload.withArray(Movie.GENRES);
+            genres.addAll(StreamSupport.stream(n.spliterator(), false)
+                    .map(JsonNode::asText)
+                    .toList());
+        }
+        final String title = payload.has(Movie.TITLE) ? payload.get(Movie.TITLE).asText() : "";
+        final String releaseDate = payload.has(Movie.RELEASE_DATE) ? payload.get(Movie.RELEASE_DATE).asText() : "";
+        final String trailer = payload.has(Movie.TRAILER_LINK) ? payload.get(Movie.TRAILER_LINK).asText() : "";
+        final String poster = payload.has(Movie.POSTER) ? payload.get(Movie.POSTER).asText() : "";
+
+        Movie movie = movieService.updateMovie(imdbId, title, releaseDate, trailer, poster, genres, backdrops);
+        return new ResponseEntity<Movie>(movie, HttpStatus.OK);
     }
 }

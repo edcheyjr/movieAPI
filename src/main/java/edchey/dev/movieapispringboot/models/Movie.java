@@ -10,12 +10,13 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.util.List;
 
-@Document(collection = "movies")
+@Document(collection = Movie.TABLE_NAME)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
-    //    TABLE DEFINITIONS
+    //    TABLE DEFINITIONStt0111161
+    public static final String TABLE_NAME = "movies";
     public static final String ID = "id";
     public static final String IMDB_ID = "imdbId";
     public static final String TITLE = "title";
@@ -23,7 +24,7 @@ public class Movie {
     public static final String TRAILER_LINK = "trailerLink";
     public static final String POSTER = "poster";
     public static final String GENRES = "genres";
-    public static final String BACKDROPS = "backdrops";
+    public static final String BACKDROPS = "backdrop";
     public static final String REVIEWS_IDS = "reviewIds";
 
     //  Table blueprint

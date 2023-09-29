@@ -18,9 +18,11 @@ public class MovieService {
 
     //TODO: change this to utilize autowire instead
     private final MovieRepository movieRepository;
+    private final MongoTemplate mongoTemplate;
 
-    public MovieService(MovieRepository movieRepository) {
+    public MovieService(MovieRepository movieRepository, MongoTemplate mongoTemplate) {
         this.movieRepository = movieRepository;
+        this.mongoTemplate = mongoTemplate;
     }
 
     public List<Movie> allMovies(){

@@ -120,6 +120,10 @@ public class MovieService {
         Optional<Movie> movie = movieRepository.findMovieByImdbId(imdbId);
         System.out.println(movie);
 //        delete the movie
+        if (movie.isPresent()) {
+            movieRepository.deleteMovieByImdbId(imdbId);
+            idMap.put(Movie.IMDB_ID, imdbId);
+        }
         return idMap;
     }
 

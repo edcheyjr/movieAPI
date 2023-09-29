@@ -24,7 +24,7 @@ public class Movie {
     public static final String TRAILER_LINK = "trailerLink";
     public static final String POSTER = "poster";
     public static final String GENRES = "genres";
-    public static final String BACKDROPS = "backdrop";
+    public static final String BACKDROPS = "backdrops";
     public static final String REVIEWS_IDS = "reviewIds";
 
     //  Table blueprint
@@ -36,7 +36,7 @@ public class Movie {
     private String trailerLink;
     private String poster;
     private List<String> genres;
-    private  List<String> backdrop;
+    private List<String> backdrops;
     @DocumentReference
     private List<Review> reviewIds;
 }

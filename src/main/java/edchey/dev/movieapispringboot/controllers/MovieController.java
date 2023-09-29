@@ -22,17 +22,17 @@ public class MovieController {
     private MovieService movieService;
 
     @PostMapping
-    public ResponseEntity<Movie> postAMovie(@RequestBody ObjectNode payload) {
+    public ResponseEntity<Map<String, Optional<Movie>>> postAMovie(@RequestBody ObjectNode payload) {
         final Iterable<JsonNode> b = payload.withArray(Movie.BACKDROPS);
         final Iterable<JsonNode> n = payload.withArray(Movie.GENRES);
         final List<String> genres = StreamSupport.stream(n.spliterator(), false)
                 .map(JsonNode::asText)
                 .toList();
-        final List<String> backdrops = StreamSupport.stream(b.spliterator(), false)
+        final List<String> backdrop = StreamSupport.stream(b.spliterator(), false)
                 .map(JsonNode::asText)
                 .toList();
-        Movie movie = movieService.createMovie(payload.get(Movie.IMDB_ID).asText(), payload.get(Movie.TITLE).asText(), payload.get(Movie.RELEASE_DATE).asText(), payload.get(Movie.TRAILER_LINK).asText(), payload.get(Movie.POSTER).asText(), genres, backdrops);
-        return new ResponseEntity<Movie>(movie, HttpStatus.CREATED);
+        Map<String, Optional<Movie>> response = movieService.createMovie(payload.get(Movie.IMDB_ID).asText(), payload.get(Movie.TITLE).asText(), payload.get(Movie.RELEASE_DATE).asText(), payload.get(Movie.TRAILER_LINK).asText(), payload.get(Movie.POSTER).asText(), genres, backdrop);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
